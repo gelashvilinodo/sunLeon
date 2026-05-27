@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
     <script
       src="https://kit.fontawesome.com/aac57e02c4.js"
       crossorigin="anonymous"
@@ -13,14 +19,40 @@
   </head>
   <body>
     <div class="main_container">
+      <div class="menu_container">
+        <nav class="menu">
+          <h3 class="menu-title" data-key="categories">Categories</h3>
+        <div class="menu-divider"></div>
+          <ul>
+            <li><a href="#" data-key="new-arrivals">New Arrivals</a></li>
+            <li><a href="#" data-key="bestseller">Bestseller</a></li>
+            <li><a href="#" data-key="shoulder-bags">Shoulder Bags</a></li>
+            <li><a href="#" data-key="outlet">Outlet</a></li>
+            <li><a href="#" data-key="sales">Sales</a></li>
+          </ul>
+        </nav>
+        <div class="language-switcher">
+          <button class="lang-btn" data-lang="en">
+            <img src="../assets/Flag_of_the_United_Kingdom_(3-5).svg.png" alt="English" class="lang-icon" />
+          </button>
+          <button class="lang-btn" data-lang="ka">
+            <img src="../assets/Flag_of_Georgia.svg.png" alt="Georgian" class="lang-icon" />
+          </button>
+        </div>
+      </div>
       <header>
-        <button>
-          <i class="fa-solid fa-bars"></i>
+        <button id="menu-btn">
+          <i class="fa-solid fa-bars open-icon"></i>
+          <i class="fa-solid fa-xmark close-icon"></i>
         </button>
-        <a href="index.html"
-          ><img src="../assets/logo.png" alt="" class="logo"
+        <a href="index.html" class="logo_link"
+          ><img src="../assets/namelogo.jpg" alt="" class="namelogo"
         /></a>
+        <button id="night-mode-btn">
+          <i class="fa-solid fa-moon"></i>
+        </button>
       </header>
     </div>
+    <script src="../script.js"></script>
   </body>
 </html>

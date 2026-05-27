@@ -1,8 +1,203 @@
+:root {
+  --mainGold: #d4af37;
+  --mainWhite: #fffdf8;
+  --mainFont: "Google Sans", sans-serif;
+  --fontWeight: 400;
+}
+
 .main_container {
   width: 100%;
-  /* height: 100vh; */
+  padding-top: 80px;
   /* max-width: 1200px; */
   margin: auto;
-  padding: 10px 16px;
-  background-color: #be2323;
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    var(--mainGold) 0%,
+    #f5e7a1 35%,
+    var(--mainWhite) 100%
+  );
+}
+
+/* header {
+  height: 80px;
+  display: flex;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--mainWhite);
+} */
+
+header {
+  padding-inline: 30px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  z-index: 1000;
+}
+
+.logo_link {
+  display: flex;
+  align-items: center;
+}
+
+.namelogo {
+  height: 65px;
+  width: auto;
+}
+
+.menu-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--mainGold);
+}
+
+#menu-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+/* ორივე აიქონი ერთ ადგილზე */
+
+#menu-btn i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.3s;
+}
+
+/* X თავიდან დამალული */
+
+.close-icon {
+  opacity: 0;
+  visibility: hidden;
+  color: var(--mainGold);
+}
+
+/* გახსნის მერე bars ქრება */
+
+#menu-btn.active .open-icon {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* გახსნის მერე X ჩნდება */
+
+#menu-btn.active .close-icon {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* მენიუს ღილაკი */
+
+#menu-btn,
+#night-mode-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* მენიუ */
+
+.menu_container {
+  position: fixed;
+  top: 80px; /* ჰედერის ქვემოდან იწყება */
+  left: -100%;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background: white;
+  transition: 0.4s ease;
+  z-index: 999;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--mainGold);
+  margin-bottom: 20px;
+}
+
+.menu ul li a {
+  font-size: 20px;
+  color: var(--mainGold);
+  font-family: var(--mainFont);
+  font-weight: var(--fontWeight);
+}
+
+/* გახსნილი მდგომარეობა */
+
+.menu_container.active {
+  left: 0;
+}
+
+/* დესკტოპი */
+
+@media (min-width: 768px) {
+  .menu_container {
+    width: 35%;
+    left: -35%;
+  }
+}
+
+/* ------- */
+
+.fa-bars,
+.fa-moon {
+  color: var(--mainGold);
+}
+
+.logo_link {
+  display: flex;
+  align-items: center;
+  height: 80%;
+}
+
+.namelogo {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.lang-btn{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.lang-btn img {
+  width: 30px;
+  height: auto;
 }
