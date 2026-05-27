@@ -201,3 +201,25 @@ header {
   width: 30px;
   height: auto;
 }
+
+.lang-btn{
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+}
+
+.lang-icon{
+    width:30px;
+    height:auto;
+}
+
+/* თავიდან ორივე დამალული */
+.lang-btn{
+    display:none;
+}
+
+/* აქტიური დროშა */
+.lang-btn.show{
+    display:block;
+}
