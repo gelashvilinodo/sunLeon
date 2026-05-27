@@ -5,10 +5,9 @@
   --fontWeight: 400;
 }
 
-.main_container {
+.main_container, .product_container {
   width: 100%;
   padding-top: 80px;
-  /* max-width: 1200px; */
   margin: auto;
   min-height: 100vh;
   background: linear-gradient(
@@ -19,7 +18,8 @@
   );
 }
 
-body.dark-mode .main_container {
+body.dark-mode .main_container,
+body.dark-mode .product_container {
   background: #121212;
 }
 
@@ -254,7 +254,8 @@ body.dark-mode {
   color: white;
 }
 
-body.dark-mode .menu_container {
+body.dark-mode .menu_container,
+body.dark-mode .product_container {
   background: #1d1d1d;
 }
 
