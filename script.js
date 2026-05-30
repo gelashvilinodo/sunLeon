@@ -93,49 +93,23 @@ nightBtn.addEventListener(
 const translations = {
 
     en: {
-
         categories: "Categories",
-
-        new_arrivals:
-            "New Arrivals",
-
-        bestseller:
-            "Bestseller",
-
-        shoulder_bags:
-            "Shoulder Bags",
-
-        outlet: "Outlet",
-
-        sales: "Sales",
-
-        colors: "Colors"
+        colors: "Colors",
+        name_asc: "Name (A-Z)",
+        name_desc: "Name (Z-A)",
+        price_asc: "Price (Low to High)",
+        price_desc: "Price (High to Low)",
 
     },
 
     ka: {
-
-        categories:
-            "კატეგორიები",
-
-        new_arrivals:
-            "ახალი კოლექცია",
-
-        bestseller:
-            "ბესტსელერები",
-
-        shoulder_bags:
-            "მხრის ჩანთები",
-
-        outlet:
-            "აუთლეტი",
-
-        sales:
-            "აქციები",
-
-        colors:
-            "ფერი"
-
+        categories: "კატეგორიები",
+        sort: "დალაგება",
+        colors: "ფერი",
+        name_asc: "სახელი (ა-ჰ)",
+        name_desc: "სახელი (ჰ-ა)",
+        price_asc: "ფასი (დაბლიდან მაღლისკენ)",
+        price_desc: "ფასი (მაღლიდან დაბლისკენ)"
     }
 
 };
@@ -186,6 +160,30 @@ function changeLanguage(lang) {
                     translations[lang][key];
 
             }
+
+        });
+
+    updateSortOptions();
+
+}
+
+function updateSortOptions() {
+
+    document
+        .querySelectorAll(
+            "#sort-select option"
+        )
+
+        .forEach(option => {
+
+            const key =
+                option.dataset.sort;
+
+            option.textContent =
+
+                translations[
+                currentLang
+                ][key];
 
         });
 
@@ -258,6 +256,8 @@ langButtons.forEach(btn => {
 
 changeLanguage(currentLang);
 
+updateSortOptions();
+
 updateLanguageButton();
 
 
@@ -328,6 +328,34 @@ async function loadCategories() {
 
         });
 
+        if (
+            currentCategory &&
+            categoryTitle
+        ) {
+
+            const currentCategoryObj =
+                categories.find(
+                    category =>
+                        category.slug ===
+                        currentCategory
+                );
+
+            if (
+                currentCategoryObj
+            ) {
+
+                categoryTitle.textContent =
+
+                    currentLang === "ka"
+
+                        ? currentCategoryObj.name_ka
+
+                        : currentCategoryObj.name_en;
+
+            }
+
+        }
+
     }
 
     catch (error) {
@@ -358,6 +386,21 @@ const params =
 const currentCategory =
     params.get("category");
 
+
+const categoryTitle =
+    document.querySelector(
+        ".category_title"
+    );
+
+const productsCount =
+    document.querySelector(
+        ".products_count"
+    );
+
+const sortSelect =
+    document.getElementById(
+        "sort-select"
+    );
 
 // =======================
 // LOAD PRODUCTS
@@ -409,6 +452,146 @@ async function loadProducts() {
                 }
 
             );
+
+        }
+
+        // SORTING
+
+        const sortValue =
+            sortSelect?.value;
+
+        function getActualPrice(
+            product
+        ) {
+
+            const variant =
+                product.bag_variants[0];
+
+            return (
+                variant.discount_price
+                ||
+                variant.price
+            );
+
+        }
+
+        if (
+            sortValue ===
+            "name-asc"
+        ) {
+
+            products.sort(
+                (a, b) => {
+
+                    const nameA =
+
+                        currentLang ===
+                            "ka"
+
+                            ? a.name_ka
+
+                            : a.name_en;
+
+                    const nameB =
+
+                        currentLang ===
+                            "ka"
+
+                            ? b.name_ka
+
+                            : b.name_en;
+
+                    return nameA.localeCompare(
+                        nameB
+                    );
+
+                }
+            );
+
+        }
+
+        if (
+            sortValue ===
+            "name-desc"
+        ) {
+
+            products.sort(
+                (a, b) => {
+
+                    const nameA =
+
+                        currentLang ===
+                            "ka"
+
+                            ? a.name_ka
+
+                            : a.name_en;
+
+                    const nameB =
+
+                        currentLang ===
+                            "ka"
+
+                            ? b.name_ka
+
+                            : b.name_en;
+
+                    return nameB.localeCompare(
+                        nameA
+                    );
+
+                }
+            );
+
+        }
+
+        if (
+            sortValue ===
+            "price-asc"
+        ) {
+
+            products.sort(
+                (a, b) =>
+
+                    getActualPrice(a)
+                    -
+                    getActualPrice(b)
+            );
+
+        }
+
+        if (
+            sortValue ===
+            "price-desc"
+        ) {
+
+            products.sort(
+                (a, b) =>
+
+                    getActualPrice(b)
+                    -
+                    getActualPrice(a)
+            );
+
+        }
+
+        // PRODUCTS COUNT
+
+        if (
+            productsCount
+        ) {
+
+            productsCount.textContent =
+
+                currentLang === "ka"
+
+                    ? `${products.length} პროდუქტი`
+
+                    : products.length === 1
+
+                        ? "1 Product"
+
+                        : `${products.length} Products`;
 
         }
 
@@ -495,11 +678,11 @@ async function loadProducts() {
                     <div class="product_prices">
 
                         <span class="old_price">
-                            ${firstVariant.price} ₾
+                            ${firstVariant.price}₾
                         </span>
 
                         <span class="discount_price">
-                            ${firstVariant.discount_price} ₾
+                            ${firstVariant.discount_price}₾
                         </span>
 
                     </div>
@@ -511,7 +694,7 @@ async function loadProducts() {
                     <div class="product_prices">
 
                         <span class="price">
-                            ${firstVariant.price} ₾
+                            ${firstVariant.price}₾
                         </span>
 
                     </div>
@@ -555,13 +738,15 @@ async function loadProducts() {
 
                             <p class="product_colors">
 
-                                ${colorsCount}
+    ${colorsCount}
 
-                                ${currentLang === "ka"
+    ${currentLang === "ka"
                     ? " ფერი"
-                    : " Colors"}
+                    : colorsCount === 1
+                        ? " Color"
+                        : " Colors"}
 
-                            </p>
+</p>
 
                         </div>
 
@@ -595,3 +780,18 @@ async function loadProducts() {
 }
 
 loadProducts();
+
+if (
+    sortSelect
+) {
+
+    sortSelect.addEventListener(
+        "change",
+        () => {
+
+            loadProducts();
+
+        }
+    );
+
+}
