@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/aac57e02c4.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>SUNLE☀️N</title>
+  </head>
+  <body>
+    <div class="bag-con">
+      <div class="menu_container">
+        <nav class="menu">
+          <h3 class="menu-title" data-key="categories">Categories</h3>
+          <div class="menu-divider"></div>
+          <ul id="categories-list"></ul>
+        </nav>
+        <div class="language-switcher">
+          <button class="lang-btn" data-lang="en">
+            <img
+              src="assets/Flag_of_the_United_Kingdom_(3-5).svg.png"
+              alt="English"
+              class="lang-icon"
+            />
+          </button>
+          <button class="lang-btn" data-lang="ka">
+            <img
+              src="assets/Flag_of_Georgia.svg.png"
+              alt="Georgian"
+              class="lang-icon"
+            />
+          </button>
+        </div>
+      </div>
+      <header>
+        <button id="menu-btn">
+          <i class="fa-solid fa-bars open-icon"></i>
+          <i class="fa-solid fa-xmark close-icon"></i>
+        </button>
+        <a href="index.html" class="logo_link">
+          <img src="assets/namelogo.jpg" alt="" class="namelogo" />
+          <img src="assets/dark_logo.jpg" alt="" class="dark_logo" />
+        </a>
+        <button id="night-mode-btn">
+          <i class="fa-solid fa-moon moon-icon"></i>
+          <i class="fa-regular fa-sun sun-icon"></i>
+        </button>
+      </header>
+      <main class="single_product_container">
+        <section class="single_product_page">
+          <div class="single_product_gallery">
+            <div class="single_product_gallery">
+              <button class="gallery_btn prev_btn">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+
+              <img
+                id="main-product-image"
+                class="single_product_image"
+                src=""
+                alt=""
+              />
+
+              <button class="gallery_btn next_btn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+              <div class="gallery_dots"></div>
+              <div class="single_product_info">
+                <h1 class="single_product_title"></h1>
+                <div id="price-container" class="single_product_price"></div>
+                <div class="variants_section">
+                  <div class="variants_container"></div>
+                </div>
+                <a
+                  href="https://ig.me/m/sunleon_store"
+                  target="_blank"
+                  class="instagram_buy_btn"
+                >
+                  <i class="fa-brands fa-instagram"></i>
+                  <span data-key="buy_instagram"> Buy on Instagram </span>
+                </a>
+                <div class="product_details">
+                  <div class="detail_item">
+                    <button class="detail_header">
+                      <span data-key="description">Product Description </span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div id="description-content" class="detail_content"></div>
+                  </div>
+                  <div class="detail_item">
+                    <button class="detail_header">
+                      <span data-key="care"> Care Instructions </span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div id="care-content" class="detail_content"></div>
+                  </div>
+                  <div class="detail_item">
+                    <button class="detail_header">
+                      <span data-key="shipping"> Shipping Information </span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+                    <div class="detail_content static_shipping"></div>
+                  </div>
+                  <div class="detail_item">
+                    <button class="detail_header">
+                      <span data-key="returns"> Returns & Exchanges </span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="detail_content static_returns"></div>
+                  </div>
+                  <div class="detail_item">
+                    <button class="detail_header">
+                      <span data-key="payments"> Payment Methods </span>
+                      <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="detail_content static_payments"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="common.js"></script>
+    <script src="product.js"></script>
+  </body>
+</html>
