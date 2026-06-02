@@ -38,6 +38,8 @@ async function loadProduct() {
                 ".variants_container"
             );
 
+        variantsContainer.innerHTML = "";
+
         const variantsSection =
             document.querySelector(
                 ".variants_section"
@@ -121,12 +123,7 @@ async function loadProduct() {
                     "click",
                     () => {
 
-                        if (
-                            variant.stock <= 0
-                        ) return;
-
-                        currentVariant =
-                            variant;
+                        currentVariant = variant;
 
                         document
                             .querySelectorAll(

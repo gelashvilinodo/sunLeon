@@ -101,7 +101,8 @@ const translations = {
         care: "Care Instructions",
         shipping: "Shipping Information",
         returns: "Returns & Exchanges",
-        payments: "Payment Methods"
+        payments: "Payment Methods",
+        bestsellers: "Bestsellers"
 
     },
 
@@ -119,7 +120,8 @@ const translations = {
         care: "მოვლის წესები",
         shipping: "მიწოდების ინფორმაცია",
         returns: "დაბრუნება და გადაცვლა",
-        payments: "გადახდის ვარიანტები"
+        payments: "გადახდის ვარიანტები",
+        bestsellers: "ბესთსელერები"
     }
 
 };
@@ -262,6 +264,17 @@ langButtons.forEach(btn => {
 
             if (typeof loadProduct === "function") {
                 loadProduct();
+            }
+            if (typeof loadHeroCategory === "function") {
+                loadHeroCategory();
+            }
+
+            if (typeof loadVideoReviews === "function") {
+                loadVideoReviews();
+            }
+
+            if (typeof loadBestSellers === "function") {
+                loadBestSellers();
             }
 
         }
