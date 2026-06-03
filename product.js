@@ -17,6 +17,11 @@ async function loadProduct() {
         const product =
             result.data[0];
 
+        console.log(product);
+
+        console.log(product.categories);
+        console.log(product.categories[0].categories_id);
+
         document.getElementById(
             "description-content"
         ).textContent =
@@ -460,12 +465,60 @@ async function loadProduct() {
 
         }
 
+        await loadRelatedProducts();
+
     } catch (error) {
         console.error(error);
     }
 }
 
 loadProduct();
+
+async function loadRelatedProducts() {
+
+    try {
+
+        const response = await fetch(
+            `${BASE_URL}/items/bag_collection?fields=*,bag_variants.*,bag_variants.cover_img.*`
+        );
+
+        const result = await response.json();
+
+        let products = result.data;
+
+        products = products.filter(
+            product => product.slug !== slug
+        );
+
+        products.sort(
+            () => Math.random() - 0.5
+        );
+
+        products = products.slice(0, 8);
+
+        const relatedProductsGrid =
+            document.querySelector(
+                ".related-products-grid"
+            );
+
+        relatedProductsGrid.innerHTML = "";
+
+        products.forEach(product => {
+
+            relatedProductsGrid.innerHTML +=
+                createProductCard(product);
+
+        });
+
+        console.log(products);
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
 
 document
     .querySelectorAll(
