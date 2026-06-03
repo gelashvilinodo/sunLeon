@@ -33,6 +33,11 @@ const sortSelect =
         "sort-select"
     );
 
+const currentSale =
+    new URLSearchParams(
+        window.location.search
+    ).get("sale");
+
 // =======================
 // LOAD PRODUCTS
 // =======================
@@ -105,6 +110,34 @@ async function loadProducts() {
                         : category.categories_id.name_en;
 
             }
+
+        }
+
+        if (currentSale) {
+
+            const saleResponse =
+                await fetch(
+
+                    `${BASE_URL}/items/sales/${currentSale}?fields=bags.*`
+
+                );
+
+            const saleResult =
+                await saleResponse.json();
+
+            const saleBagIds =
+                saleResult.data.bags.map(
+                    item =>
+                        item.bag_collection_id
+                );
+
+            products =
+                products.filter(
+                    product =>
+                        saleBagIds.includes(
+                            product.id
+                        )
+                );
 
         }
 

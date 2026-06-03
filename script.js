@@ -71,8 +71,6 @@ async function loadVideoReviews() {
         const result =
             await response.json();
 
-        console.log("VIDEO RESPONSE:", result);
-
         const products =
             result.data.filter(
                 product =>
@@ -120,7 +118,8 @@ async function loadVideoReviews() {
 
             .forEach(video => {
 
-                video.play();
+                video.play()
+                    .catch(() => { });
 
             });
 
@@ -219,3 +218,202 @@ async function loadBestSellers() {
 }
 
 loadBestSellers();
+
+const salesSection =
+    document.querySelector(
+        ".sales"
+    );
+
+async function loadSales() {
+
+    if (!salesSection) return;
+
+    try {
+
+        const response =
+            await fetch(
+                `${BASE_URL}/items/sales?fields=*.*`
+            );
+
+        const result =
+            await response.json();
+
+        console.log(result);
+
+        const sale =
+            result.data[0];
+
+        const expiresAt =
+            new Date(
+                sale.expires_at
+            ).getTime();
+
+        if (
+            expiresAt <=
+            Date.now()
+        ) {
+
+            salesSection.style.display =
+                "none";
+
+            return;
+
+        }
+
+        if (!sale) return;
+
+        const imageUrl =
+            `${BASE_URL}/assets/${sale.sale_img.id}`;
+
+        salesSection.innerHTML =
+
+            `
+                <div class="sale_card">
+
+    <img
+        src="${imageUrl}"
+        alt="${sale.name_en}"
+        class="sale_image"
+    >
+
+    <div class="sale_overlay">
+
+        <div
+            class="sale_timer"
+        ></div>
+
+        <h2
+            class="sale_title"
+        >
+
+            ${currentLang === "ka"
+
+                ? sale.name_ka
+                : sale.name_en
+            }
+
+        </h2>
+
+        <a
+            href="products.html?sale=${sale.id}"
+            class="sale_btn"
+        >
+
+            ${currentLang === "ka"
+
+                ? "ნახვა"
+                : "View"
+            }
+
+        </a>
+
+    </div>
+
+</div>
+            `;
+
+        startSaleTimer(
+            sale.expires_at
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+function startSaleTimer(
+    expiresAt
+) {
+
+    const timer =
+        document.querySelector(
+            ".sale_timer"
+        );
+
+    if (!timer) return;
+
+    const interval =
+        setInterval(() => {
+
+            const difference =
+
+                new Date(
+                    expiresAt
+                ).getTime()
+
+                - Date.now();
+
+            if (
+                difference <= 0
+            ) {
+
+                clearInterval(
+                    interval
+                );
+
+                salesSection.style.display =
+                    "none";
+
+                return;
+
+            }
+
+            const days =
+                Math.floor(
+                    difference /
+                    (1000 * 60 * 60 * 24)
+                );
+
+            const hours =
+                Math.floor(
+
+                    (difference %
+
+                        (1000 * 60 * 60 * 24))
+
+                    /
+
+                    (1000 * 60 * 60)
+
+                );
+
+            const minutes =
+                Math.floor(
+
+                    (difference %
+
+                        (1000 * 60 * 60))
+
+                    /
+
+                    (1000 * 60)
+
+                );
+
+            const seconds =
+                Math.floor(
+
+                    (difference %
+
+                        (1000 * 60))
+
+                    / 1000
+
+                );
+
+            timer.textContent =
+
+                timer.textContent =
+
+                `${String(days).padStart(2, "0")} : ${String(hours).padStart(2, "0")} : ${String(minutes).padStart(2, "0")} : ${String(seconds).padStart(2, "0")}`;
+
+        }, 1000);
+
+}
+
+loadSales();

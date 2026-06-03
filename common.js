@@ -299,7 +299,7 @@ updateLanguageButton();
 // =======================
 
 const BASE_URL =
-    "https://icon-snowman-difficult.ngrok-free.dev";
+    "http://127.0.0.1:8055";
 
 
 // =======================
@@ -439,7 +439,7 @@ if (footer) {
                 <a
                     href="faq.html"
                     data-key="faq_information"
-                >
+                >    
                     FAQ & Information
                 </a>
 
