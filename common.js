@@ -102,7 +102,9 @@ const translations = {
         shipping: "Shipping Information",
         returns: "Returns & Exchanges",
         payments: "Payment Methods",
-        bestsellers: "Bestsellers"
+        bestsellers: "Bestsellers",
+        follow_us: "Follow Us",
+        faq_information: "FAQ & Information"
 
     },
 
@@ -121,7 +123,9 @@ const translations = {
         shipping: "მიწოდების ინფორმაცია",
         returns: "დაბრუნება და გადაცვლა",
         payments: "გადახდის ვარიანტები",
-        bestsellers: "ბესთსელერები"
+        bestsellers: "ბესთსელერები",
+        follow_us: "გამოგვყევით",
+        faq_information: "კითხვები და ინფორმაცია"
     }
 
 };
@@ -366,3 +370,87 @@ async function loadCategories() {
 }
 
 loadCategories();
+
+// =======================
+// FOOTER
+// =======================
+
+const footer =
+    document.getElementById(
+        "footer"
+    );
+
+if (footer) {
+
+    footer.innerHTML = `
+
+        <div class="footer_container">
+
+            <a
+                href="index.html"
+                class="footer_logo"
+            >
+                <img
+                    src="./assets/logo.png"
+                    alt="Logo"
+                >
+            </a>
+
+            <div class="footer_socials">
+
+                <h3 data-key="follow_us">
+                    Follow Us
+                </h3>
+
+                <div class="social_links">
+
+                    <a
+                        href="#"
+                        target="_blank"
+                        aria-label="Instagram"
+                    >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        target="_blank"
+                        aria-label="TikTok"
+                    >
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        target="_blank"
+                        aria-label="Facebook"
+                    >
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="footer_links">
+
+                <a
+                    href="faq.html"
+                    data-key="faq_information"
+                >
+                    FAQ & Information
+                </a>
+
+            </div>
+
+            <p class="footer_copy">
+                © 2026 SUNLEON.
+            </p>
+
+        </div>
+
+    `;
+
+    changeLanguage(currentLang);
+
+}

@@ -1,5 +1,5 @@
 :root {
-  --mainGold: #d4af37;
+  --mainGold: #d4b037;
   --mainWhite: #fffdf8;
   --mainFont: "Google Sans", sans-serif;
   --fontWeight: 400;
@@ -381,13 +381,14 @@ body.dark-mode .dark_logo {
 .best_sellers {
   overflow: hidden;
   width: 100%;
+  padding: 2rem 0;
 }
 
 .best_sellers_track {
   display: flex;
   width: max-content;
   gap: 1rem;
-  animation: bestSellerScroll 25s linear infinite;
+  animation: bestSellerScroll 20s linear infinite;
 }
 
 .best_seller_card {
@@ -408,7 +409,6 @@ body.dark-mode .dark_logo {
   font-family: var(--mainFont);
   color: var(--mainGold);
   text-align: center;
-  margin-bottom: 1.5rem;
 }
 
 @keyframes bestSellerScroll {
@@ -481,7 +481,7 @@ body.dark-mode #sort-select {
   margin: 10px 0;
 }
 
-/* cardss */
+/* cards */
 
 .products_section {
   width: 100%;
@@ -1021,6 +1021,94 @@ body.dark-mode .title_and_price {
   .gallery_btn {
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+}
+
+/* =======================
+   FOOTER
+======================= */
+
+.footer_container {
+  padding: 2rem 1.5rem;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--mainWhite);
+}
+
+body.dark-mode .footer_container {
+  background: #1d1d1d;
+}
+
+.footer_logo img {
+  width: 125px;
+  height: auto;
+}
+
+.footer_socials {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.footer_socials h3 {
+  font-family: var(--mainFont);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--mainGold);
+}
+
+.social_links {
+  display: flex;
+  justify-content: space-around;
+  gap: 1.5rem;
+}
+
+.social_links a {
+  font-size: 1.5rem;
+  color: var(--mainGold);
+  transition: 0.3s;
+}
+
+.social_links a:hover {
+  transform: translateY(-3px);
+}
+
+.footer_links a {
+  text-decoration: none;
+  color: var(--mainGold);
+  font-family: var(--mainFont);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+body.dark-mode .footer_links a {
+  color: var(--mainGold);
+}
+
+.footer_copy {
+  font-size: 0.85rem;
+  font-family: var(--mainFont);
+  color: var(--mainGold);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .footer_container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .footer_socials {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .social_links {
     justify-content: center;
   }
 }
