@@ -32,11 +32,18 @@ async function loadProduct() {
 
         document.getElementById(
             "care-content"
-        ).textContent =
+        ).innerHTML =
+            translations[currentLang].care_text;
 
-            currentLang === "ka"
-                ? product.care_instructions_ka
-                : product.care_instructions_en;
+        document.querySelector(
+            ".static_shipping"
+        ).innerHTML =
+            translations[currentLang].shipping_text;
+
+        document.querySelector(
+            ".static_payments"
+        ).innerHTML =
+            translations[currentLang].payment_text;
 
         const variantsContainer =
             document.querySelector(

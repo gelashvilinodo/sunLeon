@@ -210,19 +210,21 @@ header {
 }
 
 .lang-btn {
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 5px;
+}
+
+.language-switcher {
+  display: flex;
+  align-items: center;
 }
 
 .lang-icon {
   width: 30px;
   height: auto;
-}
-
-.lang-btn {
-  display: none;
 }
 
 .lang-btn.show {
@@ -387,7 +389,7 @@ body.dark-mode .dark_logo {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: black  ;
+  color: black;
   font-size: 3rem;
   font-family: var(--mainFont);
   font-weight: 700;
