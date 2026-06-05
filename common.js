@@ -1,20 +1,5 @@
-// =======================
-// MENU
-// =======================
+console.log("script initialized");
 
-
-
-// =======================
-// DARK MODE
-// =======================
-
-
-
-// შენახულის შემოწმება
-
-// =======================
-// TRANSLATIONS
-// =======================
 
 const translations = {
 
@@ -37,7 +22,7 @@ const translations = {
         faq_information: "FAQ & Information",
         related_products: "Similar Products",
         care_text: `
-        <p>The bag is made from high-quality eco-leather. To preserve its appearance and durability, please follow these care instructions:</p>
+        <p>The bag is made from eco-leather. To preserve its appearance and durability, please follow these care instructions:</p>
         <p>• Do not use chemical solutions or cleaning products containing harsh chemicals;</p>
         <p>• Do not wash the bag in a washing machine;</p>
         <p>• Clean only with a dry or slightly damp soft cloth;</p>
@@ -85,7 +70,7 @@ const translations = {
         faq_information: "კითხვები და ინფორმაცია",
         related_products: "მსგავსი პროდუქტები",
         care_text: `
-            <p>ჩანთა დამზადებულია მაღალი ხარისხის ეკო ტყავისგან, ამიტომ მისი სილამაზისა და გამძლეობის შესანარჩუნებლად რეკომენდებულია შემდეგი წესების დაცვა:</p>
+            <p>ჩანთა დამზადებულია ეკო ტყავისგან, ამიტომ მისი სილამაზისა და გამძლეობის შესანარჩუნებლად რეკომენდებულია შემდეგი წესების დაცვა:</p>
             <p>• არ გამოიყენოთ ქიმიური ხსნარები ან ქიმიური ნივთიერებების შემცველი საწმენდი საშუალებები;</p>
             <p>• დაუშვებელია სარეცხ მანქანაში გარეცხვა;</p>
             <p>• გასაწმენდად გამოიყენეთ მხოლოდ მშრალი ან ოდნავ ნესტიანი, რბილი ქსოვილი;</p>
@@ -230,44 +215,6 @@ function initHeader() {
     updateLanguageButton();
 
 }
-
-// langButtons.forEach(btn => {
-
-//     btn.addEventListener(
-//         "click",
-//         () => {
-
-//             changeLanguage(
-//                 btn.dataset.lang
-//             );
-
-//             updateLanguageButton();
-
-//             loadCategories();
-
-//             if (typeof loadProducts === "function") {
-//                 loadProducts();
-//             }
-
-//             if (typeof loadProduct === "function") {
-//                 loadProduct();
-//             }
-//             if (typeof loadHeroCategory === "function") {
-//                 loadHeroCategory();
-//             }
-
-//             if (typeof loadVideoReviews === "function") {
-//                 loadVideoReviews();
-//             }
-
-//             if (typeof loadBestSellers === "function") {
-//                 loadBestSellers();
-//             }
-
-//         }
-//     );
-
-// });
 
 // =======================
 // LANGUAGE
@@ -698,6 +645,8 @@ function createProductCard(product) {
 
         product.bag_variants?.[0];
 
+    console.log(product.bag_variants[0]);
+
     // თუ variant არ არსებობს
 
     if (!firstVariant) return;
@@ -724,6 +673,32 @@ function createProductCard(product) {
 
         product.bag_variants.length;
 
+    const colorDots = product.bag_variants
+        .slice(0, 3)
+        .map(
+            variant => `
+            <span
+                class="color_dot"
+                style="background-color: ${variant.color.hex}"
+            ></span>
+        `
+        )
+        .join("");
+
+    const remainingColors =
+        product.bag_variants.length - 3;
+
+    const colorsHTML = `
+
+    ${colorDots}
+
+    ${remainingColors > 0
+            ? `<span class="color_more">+${remainingColors}</span>`
+            : ""
+        }
+
+`;
+
     // DISCOUNT CHECK
 
     const hasDiscount =
@@ -740,12 +715,6 @@ function createProductCard(product) {
                 src="./assets/Flag_of_Georgia.svg.png"
                 alt="Georgia Flag"
             />
-            <span>
-                ${currentLang === "ka"
-                ? "დამზადებულია საქართველოში"
-                : "Made in Georgia"
-            }
-            </span>
         </div>
         `
             : "";
@@ -823,49 +792,34 @@ function createProductCard(product) {
                     <div class="product_image_wrapper">
                         ${hasDiscount ? `
 
-    <div class="discount_badge">
+                        <div class="discount_badge">
 
-        -${discountPercent}%
+                            -${discountPercent}%
 
-    </div>
+                        </div>
 
-` : ""}
-${madeInGeorgiaBadge}
+                        ` : ""}
+                        ${madeInGeorgiaBadge}
                         <img
                             src="${imageUrl}"
                             alt="${productName}"
                             class="product_image"
                         />
+                        <div class="product_colors_preview">
+
+                            ${colorsHTML}
+
+                        </div>
 
                     </div>
+                    
+                    <div class="product_bottom">
 
-                    <div class="product_info">
+                        <h3 class="product_title">
+                        ${productName}
+                        </h3>
 
-                        <div class="product_left">
-
-                            <h3 class="product_title">
-                                ${productName}
-                            </h3>
-
-                            <p class="product_colors">
-
-    ${colorsCount}
-
-    ${currentLang === "ka"
-            ? " ფერი"
-            : colorsCount === 1
-                ? " Color"
-                : " Colors"}
-
-</p>
-
-                        </div>
-
-                        <div class="product_right">
-
-                            ${priceHTML}
-
-                        </div>
+                        ${priceHTML}
 
                     </div>
 

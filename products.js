@@ -53,7 +53,7 @@ async function loadProducts() {
         const response =
             await fetch(
 
-                `${BASE_URL}/items/bag_collection?fields=*,categories.categories_id.*,bag_variants.*,bag_variants.cover_img.*`
+                `${BASE_URL}/items/bag_collection?fields=*,categories.categories_id.*,bag_variants.*,bag_variants.cover_img.*,bag_variants.color.*`
 
             );
 

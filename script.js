@@ -4,7 +4,6 @@ const heroCategoryBtn =
     );
 
 async function loadHeroCategory() {
-
     if (!heroCategoryBtn) return;
 
     try {
@@ -22,6 +21,7 @@ async function loadHeroCategory() {
                 item =>
                     item.slug ===
                     "new-arrivals"
+
             );
 
         if (!category) return;
@@ -149,7 +149,7 @@ async function loadBestSellers() {
         const response =
             await fetch(
 
-                `${BASE_URL}/items/bag_collection?fields=*,categories.categories_id.*,bag_variants.*,bag_variants.cover_img.*`
+                `${BASE_URL}/items/bag_collection?fields=*,categories.categories_id.*,bag_variants.*,bag_variants.cover_img.*,bag_variants.color.*`
 
             );
 
@@ -175,35 +175,9 @@ async function loadBestSellers() {
 
             `
                 <div class="best_sellers_track">
-                    ${duplicatedProducts.map(product => {
-
-                const firstVariant =
-                    product.bag_variants?.[0];
-
-                if (!firstVariant)
-                    return "";
-
-                const imageUrl =
-                    `${BASE_URL}/assets/${firstVariant.cover_img.id}`;
-
-                return `
-
-                            <a
-                                href="product.html?slug=${product.slug}"
-                                class="best_seller_card"
-                            >
-
-                                <img
-                                    src="${imageUrl}"
-                                    alt="${product.name_en}"
-                                    class="best_seller_image"
-                                >
-
-                            </a>
-
-                        `;
-
-            }).join("")}
+                    ${duplicatedProducts
+                .map(product => createProductCard(product))
+                .join("")}
                 </div>
             `;
 
@@ -237,8 +211,6 @@ async function loadSales() {
 
         const result =
             await response.json();
-
-        console.log(result);
 
         const sale =
             result.data[0];
