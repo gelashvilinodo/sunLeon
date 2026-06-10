@@ -1,7 +1,9 @@
 :root {
   /* --mainGold: #d4b037; */
   --mainGold: #d4af37;
+  --mainBlack: #000000;
   --mainWhite: #fffdf8;
+  --mainRed: #b20101;
   --mainFont: "Google Sans", sans-serif;
   --fontWeight: 400;
 }
@@ -48,7 +50,6 @@ header {
 .dark_logo {
   height: 65px;
   width: auto;
-  /* display: none; */
 }
 
 .menu-title {
@@ -56,7 +57,7 @@ header {
   font-weight: bold;
   margin-bottom: 20px;
   font-family: var(--mainFont);
-  color: var(--mainGold);
+  color: var(--mainBlack);
 }
 
 #menu-btn {
@@ -80,6 +81,14 @@ header {
 .close-icon {
   opacity: 0;
   visibility: hidden;
+  color: var(--mainBlack);
+}
+
+body.dark-mode .close-icon {
+  color: var(--mainGold);
+}
+
+body.dark-mode .open-icon {
   color: var(--mainGold);
 }
 
@@ -135,6 +144,10 @@ header {
   flex-shrink: 0;
 }
 
+body.dark-mode .menu-title {
+  color: var(--mainWhite);
+}
+
 .menu ul {
   list-style: none;
   display: flex;
@@ -169,9 +182,13 @@ header {
 
 .menu ul li a {
   font-size: 20px;
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-family: var(--mainFont);
   font-weight: var(--fontWeight);
+}
+
+body.dark-mode .menu ul li a {
+  color: var(--mainWhite);
 }
 
 .menu_container.active {
@@ -189,7 +206,7 @@ header {
 
 .fa-bars,
 .fa-moon {
-  color: var(--mainGold);
+  color: var(--mainBlack);
 }
 
 .logo_link {
@@ -253,6 +270,10 @@ header {
 .sun-icon {
   opacity: 0;
   visibility: hidden;
+  color: var(--mainBlack);
+}
+
+body.dark-mode .sun-icon {
   color: var(--mainGold);
 }
 
@@ -267,7 +288,7 @@ body.dark-mode .product_container {
 }
 
 body.dark-mode header {
-  background: #000000;
+  background: var(--mainBlack);
 }
 
 body.dark-mode a {
@@ -418,7 +439,7 @@ index.html
   height: 250px;
   overflow: hidden;
   border-radius: 25px;
-  border: 2px solid var(--mainGold);
+  border: 2px solid var(--mainBlack);
 }
 
 .sale_image {
@@ -496,8 +517,8 @@ index.html
 
 .video_card {
   flex-shrink: 0;
-  border: 2px solid var(--mainGold);
-  border-radius: 25px;
+  border: 2px solid var(--mainBlack);
+  /* border-radius: 25px; */
   width: 250px;
   text-decoration: none;
   overflow: hidden;
@@ -536,8 +557,12 @@ index.html
   font-size: 2rem;
   font-weight: 600;
   font-family: var(--mainFont);
-  color: var(--mainGold);
+  color: var(--mainBlack);
   text-align: center;
+}
+
+body.dark-mode .best_sellers_title {
+  color: var(--mainWhite);
 }
 
 @keyframes bestSellerScroll {
@@ -553,7 +578,7 @@ index.html
 /* sorting  */
 
 .products_header {
-  padding: 20px 16px;
+  padding: 20px 20px;
 }
 
 .products_header_top {
@@ -565,32 +590,42 @@ index.html
 
 .category_title {
   font-family: var(--mainFont);
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-size: 24px;
   font-weight: 600;
 }
 
+body.dark-mode .category_title {
+  color: var(--mainGold);
+}
+
 .products_count {
   margin-top: 4px;
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-family: var(--mainFont);
   font-size: 12px;
   opacity: 0.8;
 }
 
+body.dark-mode .products_count {
+  color: var(--mainGold);
+}
+
 #sort-select {
   padding: 8px 12px;
-  border: 1px solid var(--mainGold);
+  border: 1px solid var(--mainBlack);
   border-radius: 10px;
   font-family: var(--mainFont);
   background: transparent;
-  color: var(--mainGold);
+  color: var(--mainBlack);
   cursor: pointer;
   /* width: 226px; */
 }
 
 body.dark-mode #sort-select {
-  background: #1d1d1d;
+  color: var(--mainGold);
+  background: var(--mainBlack);
+  border: 1px solid var(--mainGold);
 }
 
 @media (max-width: 768px) {
@@ -609,6 +644,10 @@ body.dark-mode #sort-select {
   height: 1px;
   background: var(--mainGold);
   margin: 10px 0;
+}
+
+body.dark-mode .divider {
+  background-color: var(--mainWhite);
 }
 
 /* cards */
@@ -786,7 +825,7 @@ body.dark-mode .price {
 }
 
 .discount_price {
-  color: #b20101;
+  color: var(--mainRed);
 }
 
 .old_price {
@@ -988,8 +1027,7 @@ body.dark-mode .price {
   aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
-  border: 1px solid var(--mainGold);
-  cursor: grab;
+  border: 1px solid var(--mainBlack);
   touch-action: pan-y;
   user-select: none;
 }
@@ -997,22 +1035,30 @@ body.dark-mode .price {
 .gallery_dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 14px;
 }
 
 .gallery_dot {
+  cursor: pointer;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(212, 175, 55, 0.4);
+  background: rgb(99, 99, 99);
   transition: 0.3s;
 }
 
+body.dark-mode .gallery_dot {
+  background: rgb(99, 99, 99);
+}
+
 .gallery_dot.active {
-  background: var(--mainGold);
-  background: var(--mainGold);
-  transform: scale(1.2);
+  background: var(--mainBlack);
+  transform: scale(1.4);
+}
+
+body.dark-mode .gallery_dot.active {
+  background: var(--mainWhite);
 }
 
 .single_product_info {
@@ -1023,23 +1069,27 @@ body.dark-mode .price {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* gap: 10px; */
+  gap: 10px;
   background-color: rgba(255, 253, 248, 0.8);
-  border: 1px solid var(--mainGold);
+  border: 1px solid var(--mainBlack);
   padding: 12px;
   border-radius: 12px;
 }
 
 body.dark-mode .title_and_price {
   background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--mainWhite);
 }
 
 .single_product_title {
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-family: var(--mainFont);
   font-size: 22px;
   font-weight: 400;
-  /* line-height: 1.3; */
+}
+
+body.dark-mode .single_product_title {
+  color: var(--mainWhite);
 }
 
 .single_product_price {
@@ -1059,11 +1109,22 @@ body.dark-mode .title_and_price {
   font-weight: 400;
 }
 
-.single_discount_price,
 .single_regular_price {
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-size: 22px;
   font-weight: 400;
+}
+
+.single_discount_price {
+  color: var(--mainRed);
+}
+
+body.dark-mode .single_discount_price {
+  color: var(--mainRed);
+}
+
+body.dark-mode .single_regular_price {
+  color: var(--mainWhite);
 }
 
 /* color variants  */
@@ -1170,9 +1231,13 @@ body.dark-mode .title_and_price {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-family: var(--mainFont);
   font-size: 16px;
+}
+
+body.dark-mode .detail_header {
+  color: var(--mainWhite);
 }
 
 .detail_content {
@@ -1184,10 +1249,14 @@ body.dark-mode .title_and_price {
     max-height 0.4s ease,
     opacity 0.3s ease,
     transform 0.3s ease;
-  color: var(--mainGold);
+  color: var(--mainBlack);
   font-family: var(--mainFont);
   font-size: 14px;
   line-height: 1.6;
+}
+
+body.dark-mode .detail_content {
+  color: var(--mainWhite);
 }
 
 .detail_item.active .detail_content {

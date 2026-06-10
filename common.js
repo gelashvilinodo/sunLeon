@@ -590,7 +590,7 @@ if (footer) {
                 <div class="social_links">
 
                     <a
-                        href="#"
+                        href="https://www.instagram.com/sunleon_store/"
                         target="_blank"
                         aria-label="Instagram"
                     >
@@ -598,7 +598,7 @@ if (footer) {
                     </a>
 
                     <a
-                        href="#"
+                        href="https://www.tiktok.com/@sunleon_store"
                         target="_blank"
                         aria-label="TikTok"
                     >
@@ -606,7 +606,7 @@ if (footer) {
                     </a>
 
                     <a
-                        href="#"
+                        href="https://www.facebook.com/profile.php?id=61563288005085"
                         target="_blank"
                         aria-label="Facebook"
                     >
@@ -652,6 +652,8 @@ function createProductCard(product) {
     if (!firstVariant) return;
 
     // IMAGE URL
+
+    console.log(firstVariant.cover_img);
 
     const imageUrl =
 
