@@ -4,6 +4,91 @@ const productParams =
 const slug =
     productParams.get("slug");
 
+const PRODUCT_LOADER_TIMEOUT = 10000;
+const PRODUCT_LOADER_FADE_DURATION = 400;
+
+let productLoaderFinished = false;
+
+function finishProductLoading() {
+
+    if (productLoaderFinished) {
+        return;
+    }
+
+    productLoaderFinished = true;
+
+    window.clearTimeout(
+        productLoaderFallback
+    );
+
+    const loader =
+        document.getElementById(
+            "product-loader"
+        );
+
+    document.body.classList.remove(
+        "product-loading"
+    );
+
+    if (!loader) {
+        return;
+    }
+
+    loader.classList.add("is-hiding");
+
+    window.setTimeout(
+        () => loader.remove(),
+        PRODUCT_LOADER_FADE_DURATION
+    );
+
+}
+
+const productLoaderFallback =
+    window.setTimeout(
+        finishProductLoading,
+        PRODUCT_LOADER_TIMEOUT
+    );
+
+function waitForImage(image) {
+
+    if (image.complete) {
+        return Promise.resolve();
+    }
+
+    return new Promise(resolve => {
+
+        const settle = () => {
+
+            image.removeEventListener(
+                "load",
+                settle
+            );
+
+            image.removeEventListener(
+                "error",
+                settle
+            );
+
+            resolve();
+
+        };
+
+        image.addEventListener(
+            "load",
+            settle,
+            { once: true }
+        );
+
+        image.addEventListener(
+            "error",
+            settle,
+            { once: true }
+        );
+
+    });
+
+}
+
 async function loadProduct() {
     try {
 
@@ -167,14 +252,10 @@ async function loadProduct() {
                             currentVariant
                         );
 
-                        currentImageIndex = 0;
-
-                        document.getElementById(
-                            "main-product-image"
-                        ).src =
-                            `${BASE_URL}/assets/${allImages[0]}`;
-
+                        renderSlides();
                         renderDots();
+                        currentImageIndex = 0;
+                        updateGallery(0, false);
 
                     }
                 );
@@ -195,18 +276,21 @@ async function loadProduct() {
             currentVariant
         );
 
-        const imageUrl =
-            `${BASE_URL}/assets/${currentVariant.cover_img.id}`;
-
-        document.getElementById(
-            "main-product-image"
-        ).src = imageUrl;
-
         let allImages = [];
 
         const dotsContainer =
             document.querySelector(
                 ".gallery_dots"
+            );
+
+        const galleryViewport =
+            document.querySelector(
+                ".gallery_viewport"
+            );
+
+        const galleryTrack =
+            document.querySelector(
+                ".gallery_track"
             );
 
         let currentImageIndex = 0;
@@ -228,6 +312,51 @@ async function loadProduct() {
         buildImagesArray(
             currentVariant
         );
+
+        function renderSlides() {
+
+            galleryTrack.innerHTML = "";
+
+            const imagePromises = [];
+
+            allImages.forEach(
+                (imageId, index) => {
+
+                    const image =
+                        document.createElement("img");
+
+                    image.className =
+                        "single_product_image";
+                    image.src =
+                        `${BASE_URL}/assets/${imageId}`;
+                    image.alt =
+                        productTitle.textContent;
+                    image.draggable = false;
+                    image.decoding = "async";
+                    image.loading = "eager";
+
+                    if (index === 0) {
+                        image.id =
+                            "main-product-image";
+                    }
+
+                    galleryTrack.appendChild(image);
+
+                    imagePromises.push(
+                        waitForImage(image)
+                    );
+
+                }
+            );
+
+            return Promise.all(
+                imagePromises
+            );
+
+        }
+
+        const galleryImagesReady =
+            renderSlides();
 
         function renderPrice(variant) {
 
@@ -272,27 +401,18 @@ async function loadProduct() {
                 ".next_btn"
             );
 
-        function updateGallery(index) {
+        function updateGallery(
+            index,
+            smooth = true
+        ) {
 
-            currentImageIndex = index;
-
-            document.getElementById(
-                "main-product-image"
-            ).src =
-                `${BASE_URL}/assets/${allImages[index]}`;
-
-            document
-                .querySelectorAll(
-                    ".gallery_dot"
-                )
-                .forEach((dot, dotIndex) => {
-
-                    dot.classList.toggle(
-                        "active",
-                        dotIndex === index
-                    );
-
-                });
+            galleryViewport.scrollTo({
+                left:
+                    galleryViewport.clientWidth *
+                    index,
+                behavior:
+                    smooth ? "smooth" : "auto"
+            });
 
         }
 
@@ -310,11 +430,16 @@ async function loadProduct() {
 
                     const dot =
                         document.createElement(
-                            "div"
+                            "button"
                         );
 
                     dot.classList.add(
                         "gallery_dot"
+                    );
+                    dot.type = "button";
+                    dot.setAttribute(
+                        "aria-label",
+                        `Show image ${index + 1}`
                     );
 
                     if (index === 0) {
@@ -347,82 +472,67 @@ async function loadProduct() {
 
         renderDots();
 
-        const mainImage =
-            document.getElementById(
-                "main-product-image"
-            );
+        let scrollFrame = null;
 
-        let touchStartX = 0;
-        let touchEndX = 0;
+        galleryViewport.addEventListener(
+            "scroll",
+            () => {
 
-        mainImage.addEventListener(
-            "touchstart",
-            (event) => {
-
-                touchStartX =
-                    event.changedTouches[0].screenX;
-
-            }
-        );
-
-        mainImage.addEventListener(
-            "touchend",
-            (event) => {
-
-                touchEndX =
-                    event.changedTouches[0].screenX;
-
-                handleSwipe();
-
-            }
-        );
-
-        function handleSwipe() {
-
-            const swipeDistance =
-                touchStartX - touchEndX;
-
-            // მარცხნივ swipe
-
-            if (swipeDistance > 50) {
-
-                let nextIndex =
-                    currentImageIndex + 1;
-
-                if (
-                    nextIndex >=
-                    allImages.length
-                ) {
-
-                    nextIndex = 0;
-
+                if (scrollFrame) {
+                    return;
                 }
 
-                updateGallery(nextIndex);
+                scrollFrame =
+                    requestAnimationFrame(() => {
 
-            }
+                        scrollFrame = null;
 
-            // მარჯვნივ swipe
+                        const slideWidth =
+                            galleryViewport.clientWidth;
 
-            if (swipeDistance < -50) {
+                        if (!slideWidth) {
+                            return;
+                        }
 
-                let prevIndex =
-                    currentImageIndex - 1;
+                        const visibleIndex =
+                            Math.min(
+                                allImages.length - 1,
+                                Math.max(
+                                    0,
+                                    Math.round(
+                                        galleryViewport.scrollLeft /
+                                        slideWidth
+                                    )
+                                )
+                            );
 
-                if (
-                    prevIndex < 0
-                ) {
+                        if (
+                            visibleIndex !==
+                            currentImageIndex
+                        ) {
+                            currentImageIndex =
+                                visibleIndex;
 
-                    prevIndex =
-                        allImages.length - 1;
+                            document
+                                .querySelectorAll(
+                                    ".gallery_dot"
+                                )
+                                .forEach(
+                                    (dot, dotIndex) => {
+                                        dot.classList.toggle(
+                                            "active",
+                                            dotIndex ===
+                                                visibleIndex
+                                        );
+                                    }
+                                );
+                        }
 
-                }
+                    });
 
-                updateGallery(prevIndex);
-
-            }
-
-        }
+            },
+            { passive: true }
+        );
 
         if (prevBtn) {
 
@@ -472,10 +582,15 @@ async function loadProduct() {
 
         }
 
+        await galleryImagesReady;
+
+        finishProductLoading();
+
         await loadRelatedProducts();
 
     } catch (error) {
         console.error(error);
+        finishProductLoading();
     }
 }
 

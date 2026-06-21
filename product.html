@@ -17,24 +17,53 @@
     ></script>
     <title>SUNLE☀️N</title>
   </head>
-  <body>
+  <body class="product-loading">
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+      }
+
+      document.documentElement.lang =
+        localStorage.getItem("language") || "en";
+    </script>
+
+    <div
+      id="product-loader"
+      class="product_loader"
+      role="status"
+      aria-live="polite"
+    >
+      <img
+        class="product_loader_logo"
+        src="assets/logo.png"
+        alt=""
+      />
+      <p class="product_loader_text loader_text_en">Loading...</p>
+      <p class="product_loader_text loader_text_ka">იტვირთება...</p>
+    </div>
+
     <div class="bag-con">
       <div id="header"></div>
       <main class="single_product_container">
         <section class="single_product_page">
           <div class="single_product_gallery">
-            <button class="gallery_btn prev_btn">
+            <button
+              class="gallery_btn prev_btn"
+              type="button"
+              aria-label="Previous image"
+            >
               <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <img
-              id="main-product-image"
-              class="single_product_image"
-              src=""
-              alt=""
-            />
+            <div class="gallery_viewport" aria-live="polite">
+              <div class="gallery_track"></div>
+            </div>
 
-            <button class="gallery_btn next_btn">
+            <button
+              class="gallery_btn next_btn"
+              type="button"
+              aria-label="Next image"
+            >
               <i class="fa-solid fa-chevron-right"></i>
             </button>
 
